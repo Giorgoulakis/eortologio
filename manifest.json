@@ -1,0 +1,32 @@
+{
+  "name": "Εορτολόγιο",
+  "short_name": "Εορτολόγιο",
+  "description": "Παραδοσιακό ελληνικό ορθόδοξο ημερολόγιο με ανατολή και δύση ηλίου, τις φάσεις της σελήνης καθώς και όλες τις ορθόδοξες γιορτές.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#80A9DD",
+  "theme_color": "#80A9DD",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "gadgetIcon.png",
+      "sizes": "125x100",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "utilities"],
+  "lang": "el",
+  "dir": "ltr"
+}

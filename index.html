@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Εορτολόγιο">
+    <meta name="theme-color" content="#80A9DD">
+    <title>Εορτολόγιο - Ελληνικό Ορθόδοξο Ημερολόγιο</title>
+    <link rel="apple-touch-icon" href="gadgetIcon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #80A9DD 0%, #5a8bc5 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .settings-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .calendar-display {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .day-number {
+            font-size: 120px;
+            font-weight: 700;
+            color: #dc6e5d;
+            line-height: 1;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .month-name {
+            font-size: 28px;
+            color: #5a8bc5;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .day-name {
+            font-size: 22px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 0 20px 20px 20px;
+            border-radius: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .info-text {
+            flex: 1;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .namedays-section {
+            background: linear-gradient(135deg, #a8d5ff 0%, #6eb4f7 100%);
+            color: white;
+            padding: 25px;
+            margin: 0 20px 20px 20px;
+            border-radius: 15px;
+            min-height: 120px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .namedays-section:active {
+            transform: scale(0.98);
+        }
+
+        .namedays-list {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-prev {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-today {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-next {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Modal για ρυθμίσεις */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            animation: modalSlide 0.3s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #80A9DD;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tooltip για πλήρη λίστα εορτών */
+        .tooltip {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .tooltip.active {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 375px) {
+            .day-number {
+                font-size: 100px;
+            }
+            
+            .month-name {
+                font-size: 24px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 450px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #80A9DD;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Εορτολόγιο</h1>
+            <div class="subtitle">Ελληνικό Ορθόδοξο Ημερολόγιο</div>
+            <button class="settings-btn" onclick="openSettings()">⚙️</button>
+        </div>
+
+        <div class="calendar-display">
+            <div class="day-name" id="dayName">Δευτέρα</div>
+            <div class="day-number" id="dayNumber">15</div>
+            <div class="month-name" id="monthName">Οκτωβρίου</div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-item">
+                <div class="info-icon">☀️</div>
+                <div class="info-text" id="sunInfo">Ανατολή - Δύση</div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🌙</div>
+                <div class="info-text" id="moonInfo">Φάση Σελήνης</div>
+            </div>
+        </div>
+
+        <div class="namedays-section" id="namedaysSection" onclick="showFullNamedays()">
+            <div class="namedays-list" id="namedaysList">Γιορτάζουν...</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn btn-prev" onclick="changeDate(-1)">
+                ← Προηγ.
+            </button>
+            <button class="nav-btn btn-today" onclick="resetToToday()">
+                Σήμερα
+            </button>
+            <button class="nav-btn btn-next" onclick="changeDate(1)">
+                Επόμ. →
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">Ρυθμίσεις</div>
+            
+            <div class="form-group">
+                <label for="languageSelect">Γλώσσα:</label>
+                <select id="languageSelect">
+                    <option value="0">Ελληνικά</option>
+                    <option value="1">English</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="latitudeInput">Γεωγραφικό Πλάτος:</label>
+                <input type="number" id="latitudeInput" step="0.01" value="37.58" placeholder="π.χ. 37.58">
+            </div>
+
+            <div class="form-group">
+                <label for="longitudeInput">Γεωγραφικό Μήκος:</label>
+                <input type="number" id="longitudeInput" step="0.01" value="23.43" placeholder="π.χ. 23.43">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn btn-cancel" onclick="closeSettings()">Ακύρωση</button>
+                <button class="modal-btn btn-save" onclick="saveSettings()">Αποθήκευση</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip for full namedays -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
