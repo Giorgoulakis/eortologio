@@ -22,22 +22,24 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            align-items: stretch;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            height: 100vh;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            animation: slideIn 0.5s ease-out;
+            border-radius: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes slideIn {
@@ -155,12 +157,16 @@
         .namedays-section {
             background: linear-gradient(135deg, #a8d5ff 0%, #6eb4f7 100%);
             color: white;
-            padding: 25px;
-            margin: 0 20px 20px 20px;
+            padding: 30px;
+            margin: 0 20px 30px 20px;
             border-radius: 15px;
-            min-height: 120px;
+            min-height: 150px;
+            flex-grow: 1;
             cursor: pointer;
             transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .namedays-section:active {
@@ -168,52 +174,13 @@
         }
 
         .namedays-list {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 1.6;
             word-wrap: break-word;
             overflow-wrap: break-word;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-prev {
-            background: #e0e0e0;
-            color: #333;
-        }
-
-        .btn-today {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-next {
-            background: #e0e0e0;
-            color: #333;
-        }
-
-        .nav-btn:active {
-            transform: scale(0.95);
+            text-align: center;
+            width: 100%;
         }
 
         /* Modal για ρυθμίσεις */
@@ -409,18 +376,6 @@
 
         <div class="namedays-section" id="namedaysSection" onclick="showFullNamedays()">
             <div class="namedays-list" id="namedaysList">Γιορτάζουν...</div>
-        </div>
-
-        <div class="navigation">
-            <button class="nav-btn btn-prev" onclick="changeDate(-1)">
-                ← Προηγ.
-            </button>
-            <button class="nav-btn btn-today" onclick="resetToToday()">
-                Σήμερα
-            </button>
-            <button class="nav-btn btn-next" onclick="changeDate(1)">
-                Επόμ. →
-            </button>
         </div>
     </div>
 
