@@ -1,11 +1,11 @@
 // Service Worker for PWA offline functionality
 const CACHE_NAME = 'eortologio-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/app.js',
-  '/manifest.json',
-  '/gadgetIcon.png'
+  './',
+  './index.html',
+  './app.js',
+  './manifest.json',
+  './gadgetIcon.png'
 ];
 
 // Install event
